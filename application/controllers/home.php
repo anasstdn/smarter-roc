@@ -167,6 +167,7 @@ class Home extends MY_Controller {
             }
             $W[$i] = array_sum($k[$i]) / $count;
         }
+        // dd('test');
 
         return $W;
     }
