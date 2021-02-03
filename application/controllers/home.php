@@ -15,7 +15,6 @@ class Home extends MY_Controller {
 	}
 
 	public function index(){
-
         $sql = "SELECT * FROM kriteria";
         $data = $this->db->query($sql);
 
