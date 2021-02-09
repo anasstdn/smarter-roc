@@ -33,7 +33,7 @@
               </div>
               <div class="card-body">
                 <?php
-                if(in_array('permissions-create', permissions($this->session->userdata())))
+                if(in_array('kriteria-create', permissions($this->session->userdata())))
                 {
                   ?>
                   <div class="row">

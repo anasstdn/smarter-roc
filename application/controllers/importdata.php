@@ -15,16 +15,16 @@ class Importdata extends MY_Controller {
 	}
 
 	public function index(){
-    // if(in_array('permissions-list', permissions($this->session->userdata())))
-    // {
-      $this->render_backend('import_data/index');
-    // }
-    // else
-    // {
-      // message(false,'','403! Anda tidak memiliki ijin akses pada halaman ini!'); 
-      // redirect('home'); 
-    // } 
-	}
+        if(in_array('import-list', permissions($this->session->userdata())))
+        {
+          $this->render_backend('import_data/index');
+      }
+      else
+      {
+          message(false,'','403! Anda tidak memiliki ijin akses pada halaman ini!'); 
+          redirect('home'); 
+      } 
+  }
 
   public function upload()
   {

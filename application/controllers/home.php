@@ -150,7 +150,7 @@ class Home extends MY_Controller {
         $array['roc_sub'] = $roc_sub;
         $array['roc_utility'] = $roc_utility;
     
-		$this->render_backend('home',$array);
+		$this->render_backend('home_developer',$array);
 	}
 
     function bobot($num_rows)

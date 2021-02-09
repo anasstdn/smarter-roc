@@ -15,15 +15,15 @@ class Kriteria extends MY_Controller {
 	}
 
 	public function index(){
-    // if(in_array('permissions-list', permissions($this->session->userdata())))
-    // {
+    if(in_array('kriteria-list', permissions($this->session->userdata())))
+    {
       $this->render_backend('kriteria/index');
-    // }
-    // else
-    // {
-      // message(false,'','403! Anda tidak memiliki ijin akses pada halaman ini!'); 
-      // redirect('home'); 
-    // } 
+    }
+    else
+    {
+      message(false,'','403! Anda tidak memiliki ijin akses pada halaman ini!'); 
+      redirect('home'); 
+    } 
 	}
 
   public function getData()
@@ -59,14 +59,14 @@ class Kriteria extends MY_Controller {
                 $delete = $val->id;
 
                 $isi_tabel[$key]['aksi'] = '';
-                // if(in_array('permissions-edit', permissions($this->session->userdata())))
-                // {
+                if(in_array('kriteria-edit', permissions($this->session->userdata())))
+                {
                   $isi_tabel[$key]['aksi'] .= "<div class='col-md-12'><div class='text-center'><a href='javascript:void(0)' onclick='edit(\"$edit\")' class='btn btn-primary btn-sm' data-original-title='Edit' title='Edit'><i class='fa fa-edit' aria-hidden='true'></i></a>&nbsp";
-                // }
-                // if(in_array('permissions-delete', permissions($this->session->userdata())))
-                // {
+                }
+                if(in_array('kriteria-delete', permissions($this->session->userdata())))
+                {
                   $isi_tabel[$key]['aksi'].="<a href='javascript:void(0)' onclick='delete_data(\"$delete\")' class='btn btn-danger btn-sm' data-original-title='Hapus' title='Hapus'><i class='fa fa-trash' aria-hidden='true'></i></a></div></div>";
-                // }
+                }
           }
         }
 

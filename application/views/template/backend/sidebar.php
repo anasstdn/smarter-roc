@@ -31,89 +31,181 @@
               </p>
             </a>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Kontrol Akses Pengguna
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <?php
-              if(in_array('user-list', permissions($this->session->userdata())))
-              {
-                ?>
-                <li class="nav-item">
-                  <a href="<?php echo base_url('/user'); ?>" class="nav-link">
-                    <p>
-                      Users
-                    </p>
-                  </a>
-                </li>
-              <?php } ?>
-              <?php
-              if(in_array('permissions-list', permissions($this->session->userdata())))
-              {
-                ?>
-                <li class="nav-item">
-                  <a href="<?php echo base_url('/permission'); ?>" class="nav-link">
-                    <p>
-                      Permissions
-                    </p>
-                  </a>
-                </li>
-              <?php } ?>
-              <?php
-              if(in_array('role-list', permissions($this->session->userdata())))
-              {
-                ?>
-                <li class="nav-item">
-                  <a href="<?php echo base_url('/role'); ?>" class="nav-link">
-                    <p>
-                      Role
-                    </p>
-                  </a>
-                </li>
-              <?php } ?>
-            </ul>
-          </li>
+          <?php
+          if(in_array('acl-menu', permissions($this->session->userdata())))
+          {
+            ?>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-wrench"></i>
+                <p>
+                  Kontrol Akses Pengguna
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <?php
+                if(in_array('user-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/user'); ?>" class="nav-link">
+                      <p>
+                        Users
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+                <?php
+                if(in_array('permissions-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/permission'); ?>" class="nav-link">
+                      <p>
+                        Permissions
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+                <?php
+                if(in_array('role-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/role'); ?>" class="nav-link">
+                      <p>
+                        Role
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+              </ul>
+            </li>
+          <?php } ?>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Masterdata
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo base_url('/kriteria'); ?>" class="nav-link">
-                  <p>
-                    Kriteria
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo base_url('/subkriteria'); ?>" class="nav-link">
-                  <p>
-                    Sub Kriteria
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo base_url('/importdata'); ?>" class="nav-link">
-                  <p>
-                    Import ke Database
-                  </p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          <?php
+          if(in_array('masterdata-menu', permissions($this->session->userdata())))
+          {
+            ?>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-cogs"></i>
+                <p>
+                  Masterdata
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <?php
+                if(in_array('kriteria-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/kriteria'); ?>" class="nav-link">
+                      <p>
+                        Kriteria
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+                <?php
+                if(in_array('subkriteria-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/subkriteria'); ?>" class="nav-link">
+                      <p>
+                        Sub Kriteria
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+                <?php
+                if(in_array('import-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/importdata'); ?>" class="nav-link">
+                      <p>
+                        Import ke Database
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+              </ul>
+            </li>
+          <?php } ?>
+
+           <?php
+          if(in_array('pengajuan-menu', permissions($this->session->userdata())))
+          {
+            ?>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-list"></i>
+                <p>
+                  Pengajuan Keluhan
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <?php
+                if(in_array('pengajuan-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/pengajuan'); ?>" class="nav-link">
+                      <p>
+                        Buat Pengajuan
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+                <?php
+                if(in_array('verifikasi-pengajuan-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/verifpengajuan'); ?>" class="nav-link">
+                      <p>
+                        Verifikasi Pengajuan
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+                <?php
+                if(in_array('riwayat-pengajuan-list', permissions($this->session->userdata())))
+                {
+                  ?>
+                  <li class="nav-item">
+                    <a href="<?php echo base_url('/riwayatpengajuan'); ?>" class="nav-link">
+                      <p>
+                        Riwayat Pengajuan
+                      </p>
+                    </a>
+                  </li>
+                <?php } ?>
+              </ul>
+            </li>
+          <?php } ?>
+
+          <?php
+          if(in_array('pengaturan-list', permissions($this->session->userdata())))
+          {
+            ?>
+            <li class="nav-item">
+              <a href="<?php echo base_url('/settings'); ?>" class="nav-link">
+                <i class="nav-icon fas fa-user-cog"></i>
+                <p>
+                  Pengaturan Pengguna
+                </p>
+              </a>
+            </li>
+          <?php } ?>
           <li class="nav-item">
             <a href="<?php echo base_url('auth/logout'); ?>" class="nav-link">
-              <i class="nav-icon fas fa-times"></i>
+              <i class="nav-icon fas fa-power-off"></i>
               <p>
                 Logout
               </p>

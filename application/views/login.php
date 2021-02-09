@@ -4,6 +4,7 @@ if($this->session->flashdata('message')){ // Jika ada
   echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" aria-hidden="true">&times;</button>'.$this->session->flashdata('message').'</div>'; // Tampilkan pesannya
 }
 ?>
+<p class="login-box-msg" style="font-size: 10pt">Sistem Aplikasi Pengaduan Kerusakan Jalan</p>
 
 <form action="<?php echo base_url('index.php/auth/login'); ?>" method="post">
 	<div class="input-group mb-3">
@@ -23,7 +24,7 @@ if($this->session->flashdata('message')){ // Jika ada
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-8">
+		<div class="col-2">
 			<!-- <div class="icheck-primary">
 				<input type="checkbox" id="remember">
 				<label for="remember">
@@ -32,9 +33,15 @@ if($this->session->flashdata('message')){ // Jika ada
 			</div> -->
 		</div>
 		<!-- /.col -->
-		<div class="col-4">
-			<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+		<div class="col-8">
+			<button type="submit" class="btn btn-primary btn-sm btn-block">Masuk</button>
+		</div>
+		<div class="col-2">
 		</div>
 		<!-- /.col -->
+	</div>
+	<br/>
+	<div class="row">
+		<p style="font-size: 10pt">Belum punya akun? <a href="<?php echo base_url('index.php/auth/daftar'); ?>">Daftar Sekarang</a></p>
 	</div>
 </form>
