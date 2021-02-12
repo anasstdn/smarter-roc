@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 
-class Migration_Masterjalan extends CI_Migration { 
+class Migration_Configid extends CI_Migration { 
 
     public function __construct()
     {
@@ -16,31 +16,24 @@ class Migration_Masterjalan extends CI_Migration {
                 'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'no_ruas' => array(
+            'config_name' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '255',
                 'null' => TRUE
             ),
-            'prefiks' => array(
+            'table_source' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '10',
+                'constraint' => '255',
                 'null' => TRUE
             ),
-            'nama_jalan' => array(
+            'config_value' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => '255',
                 'null' => TRUE
             ),
-            'kec' => array(
+            'description' => array(
                 'type' => 'VARCHAR',
-                'constraint' => '100',
-                'null' => TRUE
-            ),
-            'total_length' => array(
-                'type' => 'FLOAT',
-                'constraint' => 10,
-                'unsigned' => TRUE,
-                'auto_increment' => FALSE,
+                'constraint' => '255',
                 'null' => TRUE
             ),
             'created_at' => array(
@@ -54,12 +47,12 @@ class Migration_Masterjalan extends CI_Migration {
             
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('master_jalan');
+        $this->dbforge->create_table('config_id');
     }
 
     public function down()
     {
-        $this->dbforge->drop_table('master_jalan');
+        $this->dbforge->drop_table('config_id');
     }
 
 }

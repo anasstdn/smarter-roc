@@ -39,6 +39,10 @@ class Migration_Pengajuan extends CI_Migration {
                 'type' => 'TEXT',
                 'null' => TRUE
             ),
+            'foto' => array(
+                'type' => 'TEXT',
+                'null' => TRUE
+            ),
             'user_input' => array(
                 'type' => 'INT',
                 'constraint' => 5,
@@ -64,9 +68,11 @@ class Migration_Pengajuan extends CI_Migration {
             ),
             'created_at' => array(
                 'type' => 'DATETIME',
+                'null' => TRUE
             ),
             'updated_at' => array(
                 'type' => 'DATETIME',
+                'null' => TRUE
             ),
             
         ));
@@ -78,7 +84,7 @@ class Migration_Pengajuan extends CI_Migration {
 
     public function down()
     {
-        $this->dbforge->drop_table('master_jalan');
+        $this->dbforge->drop_table('pengajuan');
     }
 
 }

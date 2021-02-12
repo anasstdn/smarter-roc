@@ -214,6 +214,180 @@ class Migrate extends CI_Controller {
 			$this->db->insert('role_user',['role_id' => $role_id, 'user_id' => $user_id]);
 
 		}
+
+		$this->db->empty_table('kriteria');
+		$this->db->empty_table('sub_kriteria');
+		$this->db->empty_table('config_id');
+
+		$this->db->query("ALTER TABLE kriteria AUTO_INCREMENT = 1");
+		$this->db->query("ALTER TABLE sub_kriteria AUTO_INCREMENT = 1");
+		$this->db->query("ALTER TABLE config_id AUTO_INCREMENT = 1");
+
+
+		$data_kriteria = array(
+			[
+				'kriteria' => 'Baik', 
+				'rangking' => '1'
+			],
+			[
+				'kriteria' => 'Sedang', 
+				'rangking' => '2'
+			],
+			[
+				'kriteria' => 'Rusak Ringan', 
+				'rangking' => '3'
+			],
+			[
+				'kriteria' => 'Rusak Berat', 
+				'rangking' => '4'
+			],
+		);
+
+		foreach($data_kriteria as $key => $val)
+		{
+			$this->db->insert('kriteria', $val);
+		}
+
+		$data_subkriteria = array(
+			[
+				'sub_kriteria' => '76-100', 
+				'rangking' => '1'
+			],
+			[
+				'sub_kriteria' => '51-75', 
+				'rangking' => '2'
+			],
+			[
+				'sub_kriteria' => '26-50', 
+				'rangking' => '3'
+			],
+			[
+				'sub_kriteria' => '0-25', 
+				'rangking' => '4'
+			],
+		);
+
+		foreach($data_subkriteria as $key => $val)
+		{
+			$this->db->insert('sub_kriteria', $val);
+		}
+
+		$data_config=array(
+    		[
+    			'table_source'=>'roles',
+    			'config_name'=>'ROLE_ADMIN',
+    			'config_value'=>'1,2',
+    			'description'=>'Role yang tercatat sebagai Admin',
+    		],
+    		[
+    			'table_source'=>'roles',
+    			'config_name'=>'ROLE_DEVELOPER',
+    			'config_value'=>1,
+    			'description'=>'Role untuk Developer',
+    		],
+    		[
+    			'table_source'=>'roles',
+    			'config_name'=>'ROLE_ADMIN',
+    			'config_value'=>2,
+    			'description'=>'Role untuk Admin Sistem',
+    		],
+            [
+                'table_source'=>'roles',
+                'config_name'=>'ROLE_USER',
+                'config_value'=>3,
+                'description'=>'Role untuk User Sistem',
+            ],
+            [
+                'table_source'=>'kriteria',
+                'config_name'=>'KRITERIA_BAIK',
+                'config_value'=>1,
+                'description'=>'Kriteria Baik',
+            ],
+            [
+                'table_source'=>'kriteria',
+                'config_name'=>'KRITERIA_SEDANG',
+                'config_value'=>2,
+                'description'=>'Kriteria Sedang',
+            ],
+            [
+                'table_source'=>'kriteria',
+                'config_name'=>'KRITERIA_RUSAK_RINGAN',
+                'config_value'=>3,
+                'description'=>'Kriteria Rusak Ringan',
+            ],
+            [
+                'table_source'=>'kriteria',
+                'config_name'=>'KRITERIA_RUSAK_BERAT',
+                'config_value'=>4,
+                'description'=>'Kriteria Rusak Berat',
+            ],
+            [
+                'table_source'=>'sub_kriteria',
+                'config_name'=>'KRITERIA_76_100',
+                'config_value'=>1,
+                'description'=>'Kriteria 76-100',
+            ],
+            [
+                'table_source'=>'sub_kriteria',
+                'config_name'=>'KRITERIA_51_75',
+                'config_value'=>2,
+                'description'=>'Kriteria 51-75',
+            ],
+            [
+                'table_source'=>'sub_kriteria',
+                'config_name'=>'KRITERIA_26_50',
+                'config_value'=>3,
+                'description'=>'Kriteria 26-50',
+            ],
+            [
+                'table_source'=>'sub_kriteria',
+                'config_name'=>'KRITERIA_0_25',
+                'config_value'=>4,
+                'description'=>'Kriteria 0-25',
+            ],
+    		[
+    			'table_source'=>'',
+    			'config_name'=>'Y-m-d',
+    			'config_value'=>'Y-m-d',
+    			'description'=>'Date Y-m-d format',
+    		],
+    		[
+    			'table_source'=>'',
+    			'config_name'=>'d-m-Y',
+    			'config_value'=>'d-m-Y',
+    			'description'=>'Date d-m-Y format',
+    		],
+    		[
+    			'table_source'=>'',
+    			'config_name'=>'Ymd',
+    			'config_value'=>'Ymd',
+    			'description'=>'Date ymd format',
+    		],
+    		[
+    			'table_source'=>'',
+    			'config_name'=>'dmY',
+    			'config_value'=>'dmY',
+    			'description'=>'Date dmy format',
+    		],
+    		[
+    			'table_source'=>'',
+    			'config_name'=>'d/m/Y',
+    			'config_value'=>'d/m/Y',
+    			'description'=>'Date d/m/y format',
+    		],
+    		[
+    			'table_source'=>'',
+    			'config_name'=>'Y/m/d',
+    			'config_value'=>'Y/m/d',
+    			'description'=>'Date y/m/d format',
+    		],
+    	);
+
+    	foreach($data_config as $key => $val)
+		{
+			$this->db->insert('config_id', $val);
+		}
+
 		$this->db->trans_complete();
 
 		echo 'Seeding data sukses';

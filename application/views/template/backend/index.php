@@ -20,6 +20,8 @@
 
   <link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap-table.css">
 
+  <link rel="stylesheet" href="<?php echo base_url();?>assets/template/plugins/ekko-lightbox/ekko-lightbox.css">
+
   <link rel="stylesheet" href="<?php echo base_url();?>assets/template/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -85,6 +87,9 @@
 
 <!-- PAGE SCRIPTS -->
 <script src="<?php echo base_url();?>assets/template/dist/js/pages/dashboard2.js"></script>
+<script src="<?php echo base_url();?>assets/template/plugins/ekko-lightbox/ekko-lightbox.min.js"></script>
+<script src="<?php echo base_url();?>assets/template/plugins/filterizr/jquery.filterizr.min.js"></script>
+
 <script>
   $(function(){
     $(".alert button.close").click(function (e) {

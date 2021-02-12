@@ -167,7 +167,7 @@
                 {
                   ?>
                   <li class="nav-item">
-                    <a href="<?php echo base_url('/verifpengajuan'); ?>" class="nav-link">
+                    <a href="<?php echo base_url('/pengajuan/verifikasi_pengajuan'); ?>" class="nav-link">
                       <p>
                         Verifikasi Pengajuan
                       </p>

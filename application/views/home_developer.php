@@ -1,307 +1,272 @@
-<style>
-  #map-container {
-    width: 100%;
-    height: 400px;
-  }
-  #map {
-    height: 100%;
-  }
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
 
-  #description {
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 300;
-  }
+    <style>
+      html {
+        behavior: 'smooth';
+      }
+      #mapid {
+        min-height: 480px;
+        z-index: 10;
+      }
+      .map_wrapper {
+        padding: 14px;
+        border: 1px solid #e0e0e0;
+        background: #fff;
+        box-shadow: 0 3px 3px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        border-radius: 5px;
+      }
 
-  #infowindow-content .title {
-    font-weight: bold;
-  }
+    </style>
 
-  #infowindow-content {
-    display: none;
-  }
-
-  #map #infowindow-content {
-    display: inline;
-  }
-
-  .pac-card {
-    margin: 10px 10px 0 0;
-    border-radius: 2px 0 0 2px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    background-color: #fff;
-    font-family: Roboto;
-  }
-
-  #pac-container {
-    padding-bottom: 12px;
-    margin-right: 12px;
-  }
-
-  .pac-controls {
-    display: inline-block;
-    padding: 5px 11px;
-  }
-
-  .pac-controls label {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 300;
-  }
-
-  #pac-input {
-    font-size: 15px;
-    font-weight: 300;
-    padding: 0 11px 0 13px;
-    text-overflow: ellipsis;
-  }
-
-  #pac-input:focus {
-    border-color: #4d90fe;
-  }
-
-  #title {
-    color: #fff;
-    background-color: #4d90fe;
-    font-size: 25px;
-    font-weight: 500;
-    padding: 6px 12px;
-  }
-
-  #target {
-    width: 345px;
-  }
-
-  .map_wrapper {
-    padding: 14px;
-    border: 1px solid #e0e0e0;
-    background: #fff;
-    box-shadow: 0 3px 3px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    border-radius: 5px;
-  }
-
-
-</style>
-
-<div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Dashboard v2</h1>
-      </div><!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard v2</li>
-        </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
-
-<!-- Main content -->
-<section class="content">
- <div class="container-fluid">
-  <div class="row">
-    <!-- left column -->
-    <div class="col-md-12">
-      <!-- general form elements -->
-      <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Kriteria</h3>
-        </div>
-        <div class="card-body">
-          <div class="row col-lg-8" style="margin-bottom: 0.8rem">
-            <label for="nama" style="font-size:9pt" class="col-form-label col-sm-4 offset-md-0">Latitude</label>
-            <div class="col-lg-8">
-              <input name="map_lat" placeholder="" id="map_lat" class="form-control form-control-sm" value="" type="text">
-              <span id="help-block"></span>
-            </div>
-          </div>
-
-          <div class="row col-lg-8" style="margin-bottom: 0.8rem">
-            <label for="nama" style="font-size:9pt" class="col-form-label col-sm-4 offset-md-0">Longitude</label>
-            <div class="col-lg-8">
-              <input name="map_lng" placeholder="" id="map_lng" class="form-control form-control-sm" value="" type="text">
-              <span id="help-block"></span>
-            </div>
-          </div>
-
-          <div class="row col-lg-8" style="margin-bottom: 0.8rem">
-            <label for="nama" style="font-size:9pt" class="col-form-label col-sm-4 offset-md-0">Alamat Map</label>
-            <div class="col-lg-8">
-              <textarea rows="5" class="form-control form-control-sm" name="map_address" id="map_address" readonly></textarea>
-              <span id="help-block"></span>
-            </div>
-          </div>
-
-          <div class="row col-lg-12" style="margin-bottom: 0.8rem; margin-top: 5rem">
-            <input name="cari_lokasi" placeholder="Cari Lokasi" id="pac-input" class="form-control form-control-sm" value="" type="text">
-            <span id="help-block"></span>
-          </div>
-
-          <div class="row col-lg-12" style="margin-bottom: 0.8rem">
-            <div id="map-container" class="map_wrapper" style="">
-              <div id="map"></div>
-            </div>
-            <div id="infowindow-content">
-              <span id="place-address"></span>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard v2</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard v2</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
-  </div>
-</div>
-</section>
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Info boxes -->
+        <div class="row">
+          <?php if(in_array($this->session->userdata('role_id'),getConfigValues('ROLE_USER')))
+          {?>
+            <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-list"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Pengajuan</span>
+                <span class="info-box-number">
+                  <?=dashboard_user()['total_pengajuan'];?>
+                  <!-- <small>%</small> -->
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clock"></i></span>
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMpVloajVzTS_WGKUnZr3KHh4XxLK28Pw&callback=initMap&&libraries=places&v=weekly">
-</script>
+              <div class="info-box-content">
+                <span class="info-box-text">Belum Dikonfirmasi</span>
+                <span class="info-box-number"><?=dashboard_user()['total_belum_verif'];?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
 
-<script type="text/javascript">
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
 
-  function isInfoWindowOpen(infoWindow){
-    var map = infoWindow.getMap();
-    return (map !== null && typeof map !== "undefined");
-  }
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
 
-  function initMap() {
-    
-    var geocoder = new google.maps.Geocoder;
-    var infowindow = new google.maps.InfoWindow({
-      maxWidth: 300,
-    });
-    
-        //Set Content of Info Window, with HTML Tag
-        var infowindowContent = document.getElementById('infowindow-content');
+              <div class="info-box-content">
+                <span class="info-box-text">Verifikasi Diterima</span>
+                <span class="info-box-number"><?=dashboard_user()['total_verif_diterima'];?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-times"></i></span>
 
-        
-        map_lat = '-7.782962938864839';
-        map_lng = '110.36706447601318';
-        
-        var map_center = new google.maps.LatLng(map_lat,map_lng);
-        var mapOptions = {
-          zoom : 15,
-          center : map_center,
-          mapTypeControl: false,
-          streetViewControl: false,
+              <div class="info-box-content">
+                <span class="info-box-text">Verifikasi Ditolak</span>
+                <span class="info-box-number"><?=dashboard_user()['total_verif_ditolak'];?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+
+          <?php }else{?>
+
+            <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-list"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Pengajuan</span>
+                <span class="info-box-number">
+                  <?=dashboard_admin()['total_pengajuan'];?>
+                  <!-- <small>%</small> -->
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clock"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Belum Dikonfirmasi</span>
+                <span class="info-box-number"><?=dashboard_admin()['total_belum_verif'];?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-check"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Verifikasi Diterima</span>
+                <span class="info-box-number"><?=dashboard_admin()['total_verif_diterima'];?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-times"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Verifikasi Ditolak</span>
+                <span class="info-box-number"><?=dashboard_admin()['total_verif_ditolak'];?></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+
+          <?php }?>
+          <!-- /.col -->
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Peta Kerusakan Jalan</h5>
+
+                <div class="card-tools">
+
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <p class="text-center">
+                      <strong>Peta Kerusakan Jalan Bulan <?= bulan(date('m'))?> <?= date('Y')?></strong>
+                    </p>
+
+                    <div class = "map_wrapper">
+                      <div id="mapid"></div>
+                    </div>
+                    <!-- /.chart-responsive -->
+                  </div>
+                </div>
+                <!-- /.row -->
+              </div>
+              <!-- ./card-body -->
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+
+      </div>
+    </section>
+
+    <script src="<?php echo base_url();?>assets/template/plugins/jquery/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+    <script type="text/javascript">
+      var map_lat = '-7.782962938864839';
+      var map_lng = '110.36706447601318';
+      var mymap = L.map('mapid').setView([map_lat, map_lng], 16);
+      let group_marker;
+
+      L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        layers: group_marker,
+      }).addTo(mymap);
+
+      function load_data_presensi_all(){
+        $.ajax({
+          url : "<?= base_url('home/loadMap');?>",
+          type: "GET",
+          dataType: "JSON",
+          data: {
+            "date_start": $("#date_start").val(),
+            "date_end": $("#date_end").val(),
+          },
+          success: function(data){
+        // resolve(data);
+        all_coordinates = [];
+        if(data){
+          data.forEach(item => {
+            person = L.marker([item.latitude, item.longitude]).bindPopup(`User : ${item.name}
+              <br>
+              Tanggal Pengajuan : ${item.tgl_pengajuan}
+              <br>
+              Jalan : ${item.nama_jalan}
+              <br>
+              Keterangan : ${item.keterangan}`);
+            all_coordinates.push(person)
+          })
+          group_marker = L.layerGroup(all_coordinates).addTo(mymap);
+
         }
-        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        var marker = new google.maps.Marker({
-          position: map_center,
-          map: map,
-          draggable: true
-        });
 
-    //Hide or Show InfoWindow by Click the Marker
-    marker.addListener('click', function() {
-      if (isInfoWindowOpen(infowindow)){
-        infowindow.close(map, marker);
-      } else {
-        infowindow.open(map, marker);
+        $('html, body').animate({
+          scrollTop: $("#mapid").offset().top - (150)
+        }, 1000);
+
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        // reject(errorThrown);
+      },
+    })
       }
-    });
 
-
-    //Set Marker and center of map
-    geocoder.geocode({'latLng': map_center }, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (results[0]) {
-          console.log(results[0]);
-          
-                    //set value of InfoWindow
-                    infowindowContent.children['place-address'].textContent = results[0].formatted_address;
-                    infowindow.setContent(infowindowContent);
-                    infowindow.open(map, marker);
-
-          //set value to form
-          document.getElementById('map_lat').value = marker.getPosition().lat();
-          document.getElementById('map_lng').value = marker.getPosition().lng();
-          document.getElementById('map_address').value = results[0].formatted_address;
-          
+      load_data_presensi_all();
+      $('#cari').on('click',function(){
+        if(group_marker){
+          mymap.removeLayer(group_marker)
         }
-      }
-    });
+        load_data_presensi_all();
 
-    // Close InfoWindow when moving the marker
-    google.maps.event.addListener(marker, 'drag', function() {
-      infowindow.close();
-    });
-
-    // Open InfoWindow when Drop the Marker
-    google.maps.event.addListener(marker, 'dragend', function() {
-            //update lat long when drop the marker
-            geocoder.geocode({'latLng': marker.getPosition()}, function(results, status) {
-              if (status == google.maps.GeocoderStatus.OK) {
-                if (results[0]) {
-                  console.log(results[0]);
-
-            //set value of InfoWindow
-            infowindowContent.children['place-address'].textContent = results[0].formatted_address;
-            infowindow.setContent(infowindowContent);
-            infowindow.open(map, marker);
-
-            //set value of form
-            document.getElementById('map_lat').value = marker.getPosition().lat();
-            document.getElementById('map_lng').value = marker.getPosition().lng();
-            document.getElementById('map_address').value = results[0].formatted_address;
-
-          }
-        }
       });
-          });
-
-
-    // Search place by using search box (input the place's name)
-    const input = document.getElementById("pac-input");
-    const searchBox = new google.maps.places.SearchBox(input);
-    
-    //Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        map.addListener("bounds_changed", () => {
-          searchBox.setBounds(map.getBounds());
-        });
-        
-
-        
-    // Listener when place changed
-    searchBox.addListener("places_changed", () => {
-      infowindow.close();
-
-      const places = searchBox.getPlaces();
-      const place = places[0];
-      if (!place.place_id) {
-        return;
-      }
-      geocoder.geocode({'placeId': place.place_id}, function(results, status) {
-        if (status !== 'OK') {
-          window.alert('Geocoder failed due to: ' + status);
-          return;
-        }
-        
-        // Set the position of the marker using location.
-        map.setCenter(results[0].geometry.location);
-        marker.setPosition(results[0].geometry.location);
-        marker.setVisible(true);
-        
-        
-        //set value of InfoWindow
-        infowindowContent.children['place-address'].textContent = results[0].formatted_address;
-        infowindow.setContent(infowindowContent);
-        infowindow.open(map, marker);
-
-        //set value of form
-        document.getElementById('map_lat').value = marker.getPosition().lat();
-        document.getElementById('map_lng').value = marker.getPosition().lng();
-        document.getElementById('map_address').value = results[0].formatted_address;
-
-      });
-    });
-  }
-</script>
+    </script>

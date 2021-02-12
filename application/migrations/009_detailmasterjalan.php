@@ -39,9 +39,11 @@ class Migration_Detailmasterjalan extends CI_Migration {
             ),
             'created_at' => array(
                 'type' => 'DATETIME',
+                'null' => TRUE
             ),
             'updated_at' => array(
                 'type' => 'DATETIME',
+                'null' => TRUE
             ),
             
         ));
