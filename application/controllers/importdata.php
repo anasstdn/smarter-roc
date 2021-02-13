@@ -84,7 +84,7 @@ class Importdata extends MY_Controller {
 
                 // == Data Jalan Kriteria Baik
                 $array['master_jalan_id'] = $master_jalan_id;
-                $array['kriteria_id'] = '1';
+                $array['kriteria_id'] = getConfigValues('KRITERIA_BAIK')[0];
                 $array['length'] = $row['E'];
                 $array['created_at'] = date('Y-m-d H:i:s');
                 $array['updated_at'] = date('Y-m-d H:i:s');
@@ -93,7 +93,7 @@ class Importdata extends MY_Controller {
                 
                 // == Data Jalan Kriteria Sedang
                 $array['master_jalan_id'] = $master_jalan_id;
-                $array['kriteria_id'] = '2';
+                $array['kriteria_id'] = getConfigValues('KRITERIA_SEDANG')[0];
                 $array['length'] = $row['F'];
                 $array['created_at'] = date('Y-m-d H:i:s');
                 $array['updated_at'] = date('Y-m-d H:i:s');
@@ -102,7 +102,7 @@ class Importdata extends MY_Controller {
                 
                 // == Data Jalan Kriteria Rusak Ringan
                 $array['master_jalan_id'] = $master_jalan_id;
-                $array['kriteria_id'] = '3';
+                $array['kriteria_id'] = getConfigValues('KRITERIA_RUSAK_RINGAN')[0];
                 $array['length'] = $row['G'];
                 $array['created_at'] = date('Y-m-d H:i:s');
                 $array['updated_at'] = date('Y-m-d H:i:s');
@@ -111,7 +111,7 @@ class Importdata extends MY_Controller {
                 
                 // == Data Jalan Kriteria Rusak Berat
                 $array['master_jalan_id'] = $master_jalan_id;
-                $array['kriteria_id'] = '4';
+                $array['kriteria_id'] = getConfigValues('KRITERIA_RUSAK_BERAT')[0];
                 $array['length'] = $row['H'];
                 $array['created_at'] = date('Y-m-d H:i:s');
                 $array['updated_at'] = date('Y-m-d H:i:s');

@@ -81,6 +81,11 @@ class Migrate extends CI_Controller {
 					'riwayat-pengajuan-edit',
 					'riwayat-pengajuan-delete',
 
+				'spk-list',
+				'spk-create',
+				'spk-edit',
+				'spk-delete',
+
 				'pengaturan-list',
 				'pengaturan-create',
 				'pengaturan-edit',
@@ -136,6 +141,11 @@ class Migrate extends CI_Controller {
 					'riwayat-pengajuan-create',
 					'riwayat-pengajuan-edit',
 					'riwayat-pengajuan-delete',
+
+				'spk-list',
+				'spk-create',
+				'spk-edit',
+				'spk-delete',
 
 				'pengaturan-list',
 				'pengaturan-create',
@@ -202,7 +212,7 @@ class Migrate extends CI_Controller {
 				'name' => ucwords(str_replace('_', ' ', $key)),
 				'username' => $key,
 				'email' => $key.'@gmail.com',
-				'password' => md5('password_'.$key),
+				'password' => md5('12345678'),
 				'verified' => TRUE,
 				'created_at' => date('Y-m-d H:i:s')
 			);
@@ -254,15 +264,15 @@ class Migrate extends CI_Controller {
 				'rangking' => '1'
 			],
 			[
-				'sub_kriteria' => '51-75', 
+				'sub_kriteria' => '51-75.99', 
 				'rangking' => '2'
 			],
 			[
-				'sub_kriteria' => '26-50', 
+				'sub_kriteria' => '26-50.99', 
 				'rangking' => '3'
 			],
 			[
-				'sub_kriteria' => '0-25', 
+				'sub_kriteria' => '0-25.99', 
 				'rangking' => '4'
 			],
 		);

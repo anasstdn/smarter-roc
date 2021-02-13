@@ -178,18 +178,30 @@
                 if(in_array('riwayat-pengajuan-list', permissions($this->session->userdata())))
                 {
                   ?>
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a href="<?php echo base_url('/riwayatpengajuan'); ?>" class="nav-link">
                       <p>
                         Riwayat Pengajuan
                       </p>
                     </a>
-                  </li>
+                  </li> -->
                 <?php } ?>
               </ul>
             </li>
           <?php } ?>
-
+          <?php
+          if(in_array('spk-list', permissions($this->session->userdata())))
+          {
+            ?>
+          <li class="nav-item">
+            <a href="<?php echo base_url('/spk'); ?>" class="nav-link">
+              <i class="nav-icon fas fa-chart-bar"></i>
+              <p>
+                SPK SMARTER ROC
+              </p>
+            </a>
+          </li>
+          <?php } ?>
           <?php
           if(in_array('pengaturan-list', permissions($this->session->userdata())))
           {

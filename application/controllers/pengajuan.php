@@ -162,7 +162,7 @@ public function getData()
 
         $query = $this->db->query($sql);
 
-        $total = $this->db->get('pengajuan')->num_rows();
+        $total = $query->num_rows();
 
         $isi_tabel = array();
 
@@ -203,7 +203,15 @@ public function verifikasi()
     if($pengajuan->num_rows() > 0)
     {
       $pengajuan = $pengajuan->row();
+
+      $result[0]['tgl_pengajuan'] = date('d-m-Y H:i:s',strtotime($pengajuan->tgl_pengajuan));
+      $result[0]['nama_jalan'] = $pengajuan->nama_jalan;
+      $result[0]['latitude'] = $pengajuan->latitude;
+      $result[0]['longitude'] = $pengajuan->longitude;
+      $result[0]['keterangan'] = $pengajuan->keterangan;
     }
+
+    $data['location'] = json_encode($result);
 
     if($pengajuan->latitude !== null && $pengajuan->longitude !== null)
     {
@@ -226,8 +234,9 @@ public function simpan_verifikasi()
 {
   $input = $this->input->post();
   $this->db->trans_start();
-  if($this->input->post('action'))
+  if($this->input->post('action') == 'diterima')
   {
+    $status = "DITERIMA";
     $data = array(
       'flag_verifikasi' => 'Y',
       'tgl_verifikasi' => date('Y-m-d H:i:s'),
@@ -237,6 +246,7 @@ public function simpan_verifikasi()
   }
   else
   {
+    $status = "DITOLAK";
     $data = array(
       'flag_verifikasi' => 'N',
       'tgl_verifikasi' => date('Y-m-d H:i:s'),
@@ -249,27 +259,183 @@ public function simpan_verifikasi()
 
   $this->db->trans_complete();
 
-    $user = getUserById($this->session->userdata('user_id'));
+  $user = getUserById($input['id_user_input']);
 
-    if(isset($user) && !empty($user->telegram_chat_id))
-    {
-     try{
-      $emoticon_smile = "\ud83d\ude0a";
-      $text = "Halo " . $user->name . "\n\n"
+  if(isset($user) && !empty($user->telegram_chat_id))
+  {
+   try{
+    $emoticon_smile = "\ud83d\ude0a";
+    $text = "Halo " . $user->name . "\n\n"
 
-      . "Ini adalah notifikasi bot Aplikasi Pengaduan Kerusakan Jalan.\n"
-      . "Pengajuan anda berhasil disimpan dengan detail lokasi di <b>".$data['nama_jalan']."</b> di titik koordinat latitude <b>".$data['latitude']."</b> dan longitude <b>".$data['longitude']."</b>. Silahkan anda menunggu verifikasi dari kami.\n\n"
-      . "Terima kasih " . json_decode('"' . $emoticon_smile . '"');
+    . "Ini adalah notifikasi bot Aplikasi Pengaduan Kerusakan Jalan.\n"
+    . "Pengajuan anda dengan detail lokasi di <b>".$input['nama_jalan']."</b> di titik koordinat latitude <b>".$input['latitude']."</b> dan longitude <b>".$input['longitude']."</b> dinyatakan <b>".$status."</b>.\n\n"
+    . "Terima kasih " . json_decode('"' . $emoticon_smile . '"');
 
-      botTelegram($user->telegram_chat_id,$text,'1427433519:AAEqmIoFGcRXEt28kBra-w4y-OzSLyTwFSk');
-    }catch(Exception $e){
-      die('Error: '.$e->getMessage());
-    }
+    botTelegram($user->telegram_chat_id,$text,'1427433519:AAEqmIoFGcRXEt28kBra-w4y-OzSLyTwFSk');
+  }catch(Exception $e){
+    die('Error: '.$e->getMessage());
   }
+}
+
+  $admin = getUserById($this->session->userdata('user_id'));
+
+  if(isset($admin) && !empty($admin->telegram_chat_id))
+  {
+   try{
+    $emoticon_smile = "\ud83d\ude0a";
+    $text = "Halo " . $admin->name . "\n\n"
+
+    . "Ini adalah notifikasi bot Aplikasi Pengaduan Kerusakan Jalan.\n"
+    . "Anda telah berhasil melakukan verifikasi pengajuan dengan detail lokasi di <b>".$input['nama_jalan']."</b> di titik koordinat latitude <b>".$input['latitude']."</b> dan longitude <b>".$input['longitude']."</b> dengan status <b>".$status."</b>.\n\n"
+    . "Terima kasih " . json_decode('"' . $emoticon_smile . '"');
+
+    botTelegram($admin->telegram_chat_id,$text,'1427433519:AAEqmIoFGcRXEt28kBra-w4y-OzSLyTwFSk');
+  }catch(Exception $e){
+    die('Error: '.$e->getMessage());
+  }
+}
 
   message($update,'Data berhasil diupdate','Data gagal diupdate');
 
-  redirect('verifikasi_pengajuan/index');
+  redirect('pengajuan/verifikasi_pengajuan');
+}
+
+public function getDataDiterima()
+{
+  $data = array(
+            'offset' => !empty($this->input->post('offset')) ? $this->input->post('offset') : 0,
+            'limit' => !empty($this->input->post('limit')) ? $this->input->post('limit') : 10,
+            'search' => !empty($this->input->post('search')) ? $this->input->post('search') : null,
+        );
+
+        $sql = "SELECT pengajuan.* FROM pengajuan";
+        if(!empty($data['search']))
+        {
+          $sql .= " WHERE nama_jalan LIKE '%".$data['search']."%' AND flag_verifikasi IS NULL";
+        }
+        else
+        {
+          $sql .= " WHERE flag_verifikasi = 'Y'";
+        }
+        $sql .= " ORDER BY tgl_pengajuan DESC LIMIT ".$data['offset'].",".$data['limit']; 
+
+        $query = $this->db->query($sql);
+
+        $total = $query->num_rows();
+
+        $isi_tabel = array();
+
+        if($query->num_rows() > 0)
+        {
+          foreach($query->result() as $key => $val)
+          {
+            $isi_tabel[$key]['tgl_pengajuan'] = $val->tgl_pengajuan;
+            $isi_tabel[$key]['nama_jalan'] = $val->nama_jalan;
+            $isi_tabel[$key]['latitude'] = $val->latitude;
+            $isi_tabel[$key]['longitude'] = $val->longitude;
+
+            $isi_tabel[$key]['user_input'] = getUserById($val->user_input)->name;
+
+            $detail = base_url('pengajuan/detail/'.$val->id);
+
+            $isi_tabel[$key]['aksi'] = '';
+            if(in_array('verifikasi-pengajuan-list', permissions($this->session->userdata())))
+            {
+             $isi_tabel[$key]['aksi'] .= "<div class='col-md-12'><div class='text-center'><a href='$detail' class='btn btn-primary btn-sm' data-original-title='Edit' title='Edit'><i class='fa fa-eye' aria-hidden='true'></i></a>&nbsp";
+           }
+         }
+       }
+
+        echo json_encode(array('data' => $isi_tabel, 'total' => $total));
+}
+
+public function getDataDitolak()
+{
+  $data = array(
+            'offset' => !empty($this->input->post('offset')) ? $this->input->post('offset') : 0,
+            'limit' => !empty($this->input->post('limit')) ? $this->input->post('limit') : 10,
+            'search' => !empty($this->input->post('search')) ? $this->input->post('search') : null,
+        );
+
+        $sql = "SELECT pengajuan.* FROM pengajuan";
+        if(!empty($data['search']))
+        {
+          $sql .= " WHERE nama_jalan LIKE '%".$data['search']."%' AND flag_verifikasi IS NULL";
+        }
+        else
+        {
+          $sql .= " WHERE flag_verifikasi = 'N'";
+        }
+        $sql .= " ORDER BY tgl_pengajuan DESC LIMIT ".$data['offset'].",".$data['limit']; 
+
+        $query = $this->db->query($sql);
+
+        $total = $query->num_rows();
+
+        $isi_tabel = array();
+
+        if($query->num_rows() > 0)
+        {
+          foreach($query->result() as $key => $val)
+          {
+            $isi_tabel[$key]['tgl_pengajuan'] = $val->tgl_pengajuan;
+            $isi_tabel[$key]['nama_jalan'] = $val->nama_jalan;
+            $isi_tabel[$key]['latitude'] = $val->latitude;
+            $isi_tabel[$key]['longitude'] = $val->longitude;
+
+            $isi_tabel[$key]['user_input'] = getUserById($val->user_input)->name;
+
+            $detail = base_url('pengajuan/detail/'.$val->id);
+
+            $isi_tabel[$key]['aksi'] = '';
+            if(in_array('verifikasi-pengajuan-list', permissions($this->session->userdata())))
+            {
+             $isi_tabel[$key]['aksi'] .= "<div class='col-md-12'><div class='text-center'><a href='$detail' class='btn btn-primary btn-sm' data-original-title='Edit' title='Edit'><i class='fa fa-eye' aria-hidden='true'></i></a>&nbsp";
+           }
+         }
+       }
+
+        echo json_encode(array('data' => $isi_tabel, 'total' => $total));
+}
+
+public function detail()
+{
+  if(in_array('verifikasi-pengajuan-list', permissions($this->session->userdata())))
+  {
+    $id = $this->uri->segment(3);
+
+    $this->db->from('pengajuan');
+    $this->db->where('id =',$id);
+    $pengajuan = $this->db->get();
+
+    if($pengajuan->num_rows() > 0)
+    {
+      $pengajuan = $pengajuan->row();
+
+      $result[0]['tgl_pengajuan'] = date('d-m-Y H:i:s',strtotime($pengajuan->tgl_pengajuan));
+      $result[0]['nama_jalan'] = $pengajuan->nama_jalan;
+      $result[0]['latitude'] = $pengajuan->latitude;
+      $result[0]['longitude'] = $pengajuan->longitude;
+      $result[0]['keterangan'] = $pengajuan->keterangan;
+    }
+
+    $data['location'] = json_encode($result);
+
+    if($pengajuan->latitude !== null && $pengajuan->longitude !== null)
+    {
+      $data['longlat'] = $pengajuan->latitude.','.$pengajuan->longitude;
+    }
+
+    $data['pengajuan'] = $pengajuan;
+    $data['id_pengajuan'] = $id;
+
+    $this->render_backend('verifikasi_pengajuan/detail', $data);
+  }
+  else
+  {
+    message(false,'','403! Anda tidak memiliki ijin akses pada halaman ini!'); 
+    redirect('home'); 
+  }  
 }
 
 }

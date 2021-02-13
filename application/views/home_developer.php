@@ -24,12 +24,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Dashboard v2</h1>
+            <h1 class="m-0 text-dark">Dashboard</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v2</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -167,7 +167,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Peta Kerusakan Jalan</h5>
+                <h5 class="card-title">Peta Pengajuan Kerusakan Jalan</h5>
 
                 <div class="card-tools">
 
@@ -178,7 +178,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p class="text-center">
-                      <strong>Peta Kerusakan Jalan Bulan <?= bulan(date('m'))?> <?= date('Y')?></strong>
+                      <strong>Peta Pengajuan Kerusakan Jalan Bulan <?= bulan(date('m'))?> <?= date('Y')?></strong>
                     </p>
 
                     <div class = "map_wrapper">
@@ -209,11 +209,11 @@
     <script type="text/javascript">
       var map_lat = '-7.782962938864839';
       var map_lng = '110.36706447601318';
-      var mymap = L.map('mapid').setView([map_lat, map_lng], 16);
+      var mymap = L.map('mapid').setView([map_lat, map_lng], 12);
       let group_marker;
 
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        maxZoom: 18,
+        maxZoom: 16,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
         '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',

@@ -303,4 +303,49 @@ if(!function_exists('dashboard_user'))
 	}
 }
 
+if(!function_exists('get_detail_master_jalan'))
+{
+	function get_detail_master_jalan($id_master_jalan, $id_kriteria)
+	{
+		$ci =& get_instance();
+		$ci->db->select('*');
+		$ci->db->from('detail_master_jalan');
+		$ci->db->where('master_jalan_id =',$id_master_jalan);
+		$ci->db->where('kriteria_id =',$id_kriteria);
+
+		$data = $ci->db->get();
+
+		if($data->num_rows() > 0)
+		{
+			return $data->row()->length; 
+		}
+		else
+		{
+			return '0';
+		}
+	}
+}
+
+if(!function_exists('get_kriteria'))
+{
+	function get_kriteria($id)
+	{
+		$ci =& get_instance();
+		$ci->db->select('*');
+		$ci->db->from('kriteria');
+		$ci->db->where('id =',$id);
+
+		$data = $ci->db->get();
+
+		if($data->num_rows() > 0)
+		{
+			return $data->row()->kriteria;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
 }
