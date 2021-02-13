@@ -53,8 +53,20 @@
 				dataType : "json",
 				data : input,
 				success : function(response) {
-					$("." + response.type).html(response.message)
-					$("." + response.type).show();
+					if(response.status == true)
+					{
+						setTimeout(function() {
+							<?php
+							$this->session->set_flashdata('success', 'Verifikasi OTP Berhasil');
+							?>
+							window.location = '<?=base_url('/auth')?>';
+						}, 2000);
+					}
+					else
+					{
+						$("." + response.type).html(response.message)
+						$("." + response.type).show();
+					}
 				},
 				error : function() {
 					alert("ss");

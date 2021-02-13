@@ -61,7 +61,9 @@ class Auth extends MY_Controller {
    if($this->session->userdata('authenticated')){
     redirect('page/home'); 
   } 
-  $this->session->sess_destroy(); 
+
+  session_unset();
+  session_destroy();
   $this->render_login('daftar');
 }
 
@@ -125,7 +127,8 @@ public function sendOTP()
 
       session_unset();
       session_destroy();
-      echo json_encode(array("type"=>"success", "message"=>"Verifikasi OTP berhasil. Silahkan anda menuju halaman Login."));
+
+      echo json_encode(array("status"=>true,"type"=>"success", "message"=>"Verifikasi Berhasil"));
     } else {
       echo json_encode(array("type"=>"error", "message"=>"Kode OTP yang anda masukkan salah."));
     }

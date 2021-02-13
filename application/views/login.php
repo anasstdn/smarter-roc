@@ -3,6 +3,9 @@
 if($this->session->flashdata('message')){ // Jika ada
   echo '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" aria-hidden="true">&times;</button>'.$this->session->flashdata('message').'</div>'; // Tampilkan pesannya
 }
+if($this->session->flashdata('success')){ // Jika ada
+  echo '<div class="alert alert-success alert-dismissable"><button type="button" class="close" aria-hidden="true">&times;</button>'.$this->session->flashdata('message').'</div>'; // Tampilkan pesannya
+}
 ?>
 <p class="login-box-msg" style="font-size: 10pt">Sistem Aplikasi Pengaduan Kerusakan Jalan</p>
 
