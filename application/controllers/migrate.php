@@ -35,7 +35,7 @@ class Migrate extends CI_Controller {
 		date_default_timezone_set('Asia/Jakarta');
 
 		$permission_list = array(
-			'developer' => [
+			'superadministrator' => [
 				'acl-menu',
 					'user-list',
 					'user-create',
@@ -101,14 +101,14 @@ class Migrate extends CI_Controller {
 					'user-create',
 					'user-edit',
 					'user-delete',
-					'permissions-list',
-					'permissions-create',
-					'permissions-edit',
-					'permissions-delete',
-					'role-list',
-					'role-create',
-					'role-edit',
-					'role-delete',
+					// 'permissions-list',
+					// 'permissions-create',
+					// 'permissions-edit',
+					// 'permissions-delete',
+					// 'role-list',
+					// 'role-create',
+					// 'role-edit',
+					// 'role-delete',
 					
 				'masterdata-menu',
 					'kriteria-list',
@@ -129,10 +129,10 @@ class Migrate extends CI_Controller {
 					'import-delete',
 
 				'pengajuan-menu',
-					'pengajuan-list',
-					'pengajuan-create',
-					'pengajuan-edit',
-					'pengajuan-delete',
+					// 'pengajuan-list',
+					// 'pengajuan-create',
+					// 'pengajuan-edit',
+					// 'pengajuan-delete',
 					'verifikasi-pengajuan-list',
 					'verifikasi-pengajuan-create',
 					'verifikasi-pengajuan-edit',
